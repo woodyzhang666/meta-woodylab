@@ -8,7 +8,7 @@ require recipes-kernel/linux/linux-yocto.inc
 KBRANCH = "woody"
 KBRANCH:loongarch64 = "loongson-dev"
 
-SRC_URI = "git:///home/woody/workspace/linux/.git;nocheckout=1;name=machine;branch=${KBRANCH}"
+SRC_URI = "git://github.com/woodyzhang666/linux.git;protocol=https;nocheckout=1;name=machine;branch=${KBRANCH}"
 #SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git;protocol=git;nocheckout=1;name=machine"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
@@ -32,9 +32,8 @@ KBUILD_DEFCONFIG:qemux86-64 = "x86_64_defconfig"
 KERNEL_DANGLING_FEATURES_WARN_ONLY = "1"
 KERNEL_VERSION_SANITY_SKIP="1"
 
-SRCREV_machine = "8fbbe970d9d7ae0490fa16d22c18f172b529f14f"
-#SRCREV_machine:loongarch64 = "f67dd6ce0723ad013395f20a3f79d8a437d3f455"
-SRCREV_machine:loongarch64 = "3a4302c97580986370449b74fa7fe973135a815e"
+SRCREV_machine = "3f41e17788cb9472dfe1a73ab554a2d83f0326c2"
+SRCREV_machine:loongarch64 = "c7e4669914823c58bcd0029f2106144d2ef4dbb0"
 
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
