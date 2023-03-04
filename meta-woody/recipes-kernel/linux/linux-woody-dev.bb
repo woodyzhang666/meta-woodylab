@@ -25,6 +25,8 @@ S = "${WORKDIR}/git"
 LOCALVERSION ?= ""
 KCONFIG_MODE ?= "alldefconfig"
 KMACHINE ?= "${MACHINE}"
+
+KBUILD_DEFCONFIG ?= "defconfig"
 KBUILD_DEFCONFIG:loongarch64 = "loongson3_defconfig"
 KBUILD_DEFCONFIG:sunxi = "sunxi_defconfig"
 KBUILD_DEFCONFIG:qemux86-64 = "x86_64_defconfig"
