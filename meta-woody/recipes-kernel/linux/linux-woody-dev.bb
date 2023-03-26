@@ -1,6 +1,8 @@
 # Copyright (C) 2022 Woody Zhang <woodyzhang666@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
 inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
@@ -8,16 +10,20 @@ KBUILD_BUILD_USER = "woody"
 KBUILD_BUILD_HOST = "woodylab"
 
 KBRANCH = "woody"
+#KBRANCH:licheerv_dock = "woody-d1-wip"
 KMETA = "kernel-meta"
 SRC_URI = "git://github.com/woodyzhang666/linux.git;protocol=https;branch=${KBRANCH};name=machine \
             git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=master;destsuffix=${KMETA} \
+            file://0001-add-usb-configfs-functions.patch;patchdir=${KMETA} \
             "
 SRCREV_machine = "07a2011497d99556b3996bfbf3a04d2e7e5c5b0d"
+#SRCREV_machine:licheerv_dock = "7ac91b69d7d7566f8b1fcb6970c625c41db16efb"
 SRCREV_meta = "bd77e1f904f681d21732bb3ae77b6591f6ec3d81"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 LINUX_VERSION ?= "6.3"
+#LINUX_VERSION:licheerv_dock ?= "6.1"
 LINUX_VERSION_EXTENSION:append = "-woody"
 
 DEPENDS += "${@bb.utils.contains('ARCH', 'x86', 'elfutils-native', '', d)}"
@@ -35,6 +41,7 @@ KBUILD_DEFCONFIG:loongarch64 = "loongson3_defconfig"
 KBUILD_DEFCONFIG:sunxi = "sunxi_defconfig"
 KBUILD_DEFCONFIG:x86-64 = "x86_64_defconfig"
 KBUILD_DEFCONFIG:arm64 = "defconfig"
+#KBUILD_DEFCONFIG:licheerv_dock = "nezha_defconfig"
 
 KERNEL_VERSION_SANITY_SKIP="1"
 

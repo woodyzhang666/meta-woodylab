@@ -9,6 +9,8 @@ LICENSE = "MIT"
 
 LICENSE_CREATE_PACKAGE = "1"
 
+#IMAGE_INSTALL += "packagegroup-meta-oe"
+
 inherit core-image
 
 CORE_IMAGE_EXTRA_INSTALL = "packagegroup-core-full-cmdline"

@@ -1,0 +1,33 @@
+From fd07738829b4c1bb4e4f430be2ba7ed49310e072 Mon Sep 17 00:00:00 2001
+From: Woody Zhang <woodylab@foxmail.com>
+Date: Mon, 13 Mar 2023 20:15:57 +0800
+Subject: [PATCH] add usb configfs functions
+
+Signed-off-by: Woody Zhang <woodylab@foxmail.com>
+---
+ features/usb/usb-gadgets.cfg | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/features/usb/usb-gadgets.cfg b/features/usb/usb-gadgets.cfg
+index 73aeb7e9..3a3ab6a3 100644
+--- a/features/usb/usb-gadgets.cfg
++++ b/features/usb/usb-gadgets.cfg
+@@ -16,3 +16,15 @@ CONFIG_USB_G_MULTI=m
+ CONFIG_USB_G_HID=m
+ CONFIG_USB_G_DBGP=m
+ CONFIG_USB_G_WEBCAM=m
++CONFIG_USB_CONFIGFS=m
++CONFIG_USB_CONFIGFS_SERIAL=y
++CONFIG_USB_CONFIGFS_ACM=y
++CONFIG_USB_CONFIGFS_NCM=y
++CONFIG_USB_CONFIGFS_ECM=y
++CONFIG_USB_CONFIGFS_ECM_SUBSET=y
++CONFIG_USB_CONFIGFS_EEM=y
++CONFIG_USB_CONFIGFS_MASS_STORAGE=y
++CONFIG_USB_CONFIGFS_F_FS=y
++CONFIG_USB_CONFIGFS_F_HID=y
++CONFIG_USB_CONFIGFS_F_UVC=y
++CONFIG_USB_CONFIGFS_F_UAC2=y
+-- 
+2.39.1
+
