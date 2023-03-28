@@ -16,7 +16,7 @@ SRC_URI = "git://github.com/woodyzhang666/linux.git;protocol=https;branch=${KBRA
             git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=master;destsuffix=${KMETA} \
             file://0001-add-usb-configfs-functions.patch;patchdir=${KMETA} \
             "
-SRCREV_machine = "07a2011497d99556b3996bfbf3a04d2e7e5c5b0d"
+SRCREV_machine = "dc03d2b53fb2c2ffc0c1c705448863eb5fa0ab5b"
 #SRCREV_machine:licheerv_dock = "7ac91b69d7d7566f8b1fcb6970c625c41db16efb"
 SRCREV_meta = "bd77e1f904f681d21732bb3ae77b6591f6ec3d81"
 
