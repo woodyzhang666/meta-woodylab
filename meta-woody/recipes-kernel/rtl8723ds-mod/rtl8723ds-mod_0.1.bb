@@ -5,7 +5,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=1f6f1c0be32491a0c8d2915607a28f36"
 
 inherit module siteinfo
 
-SRC_URI = "git://github.com/lwfinger/rtl8723ds.git;protocol=https;branch=master"
+SRC_URI = "git://github.com/lwfinger/rtl8723ds.git;protocol=https;branch=master \
+           file://0001-Makefile-add-modules_install-make-target.patch \
+           "
 SRCREV = "ec85dc6b9f72bfe413bff464ed01a272e29c8dbe"
 
 S = "${WORKDIR}/git"

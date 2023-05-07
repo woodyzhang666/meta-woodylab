@@ -1,0 +1,86 @@
+From 3e4ad05cf4ac1f0156e49b77f0d310d3741a29ba Mon Sep 17 00:00:00 2001
+From: Woody Zhang <woodylab@foxmail.com>
+Date: Mon, 3 Apr 2023 16:26:15 +0800
+Subject: [PATCH] efinet: Add DHCP proxy support
+
+If a proxyDHCP configuration is used, the server name, server IP and boot
+file values should be taken from the DHCP proxy offer instead of the DHCP
+server ack packet. Currently that case is not handled, add support for it.
+
+Upstream-Status: Backport [from rhboot grub]
+
+Signed-off-by: Ian Page Hands <iphands@gmail.com>
+Signed-off-by: Robbie Harwood <rharwood@redhat.com>
+Signed-off-by: Woody Zhang <woodylab@foxmail.com>
+---
+ grub-core/net/drivers/efi/efinet.c | 20 ++++++++++++++++++++
+ include/grub/efi/api.h             | 22 +++++++++++++++++++++-
+ 2 files changed, 41 insertions(+), 1 deletion(-)
+
+diff --git a/grub-core/net/drivers/efi/efinet.c b/grub-core/net/drivers/efi/efinet.c
+index 5adf5f4..b08dd6b 100644
+--- a/grub-core/net/drivers/efi/efinet.c
++++ b/grub-core/net/drivers/efi/efinet.c
+@@ -400,6 +400,26 @@ grub_efi_net_config_real (grub_efi_handle_t hnd, char **device,
+       continue;
+     pxe_mode = pxe->mode;
+ 
++    struct grub_net_bootp_packet *dhcp_ack = &pxe_mode->dhcp_ack;
++    if (pxe_mode->proxy_offer_received)
++      {
++         grub_dprintf ("efinet", "proxy offer receive");
++         struct grub_net_bootp_packet *proxy_offer = &pxe_mode->proxy_offer;
++
++         if (proxy_offer && dhcp_ack->boot_file[0] == '\0')
++           {
++             grub_dprintf ("efinet", "setting values from proxy offer");
++             /* Here we got a proxy offer and the dhcp_ack has a nil boot_file
++              * Copy the proxy DHCP offer details into the bootp_packet we are
++              * sending forward as they are the deatils we need.
++              */
++             *dhcp_ack->server_name = *proxy_offer->server_name;
++             *dhcp_ack->boot_file   = *proxy_offer->boot_file;
++             dhcp_ack->server_ip    = proxy_offer->server_ip;
++           }
++
++      }
++
+     inter = grub_net_configure_by_dhcp_ack (card->name, card, 0,
+ 					    (struct grub_net_bootp_packet *)
+ 					    &pxe_mode->dhcp_ack,
+diff --git a/include/grub/efi/api.h b/include/grub/efi/api.h
+index bdc1e86..b8de726 100644
+--- a/include/grub/efi/api.h
++++ b/include/grub/efi/api.h
+@@ -1528,7 +1528,27 @@ typedef grub_uint8_t grub_efi_pxe_packet_t[1472];
+ 
+ typedef struct grub_efi_pxe_mode
+ {
+-  grub_uint8_t unused[52];
++  grub_efi_boolean_t started;
++  grub_efi_boolean_t ipv6_available;
++  grub_efi_boolean_t ipv6_supported;
++  grub_efi_boolean_t using_ipv6;
++  grub_efi_boolean_t bis_supported;
++  grub_efi_boolean_t bis_detected;
++  grub_efi_boolean_t auto_arp;
++  grub_efi_boolean_t send_guid;
++  grub_efi_boolean_t dhcp_discover_valid;
++  grub_efi_boolean_t dhcp_ack_received;
++  grub_efi_boolean_t proxy_offer_received;
++  grub_efi_boolean_t pxe_discover_valid;
++  grub_efi_boolean_t pxe_reply_received;
++  grub_efi_boolean_t pxe_bis_reply_received;
++  grub_efi_boolean_t icmp_error_received;
++  grub_efi_boolean_t tftp_error_received;
++  grub_efi_boolean_t make_callbacks;
++  grub_efi_uint8_t ttl;
++  grub_efi_uint8_t tos;
++  grub_efi_ip_address_t station_ip;
++  grub_efi_ip_address_t subnet_mask;
+   grub_efi_pxe_packet_t dhcp_discover;
+   grub_efi_pxe_packet_t dhcp_ack;
+   grub_efi_pxe_packet_t proxy_offer;
+-- 
+2.39.2
+

@@ -9,8 +9,12 @@ LICENSE = "MIT"
 
 LICENSE_CREATE_PACKAGE = "1"
 
-#IMAGE_INSTALL += "packagegroup-meta-oe"
+CORE_IMAGE_EXTRA_INSTALL = "packagegroup-core-full-cmdline"
 
 inherit core-image
 
-CORE_IMAGE_EXTRA_INSTALL = "packagegroup-core-full-cmdline"
+# Must after inherit core-image
+#IMAGE_INSTALL += "packagegroup-meta-oe"
+IMAGE_INSTALL += "bmap-tools"
+IMAGE_INSTALL += "${@bb.utils.contains('MACHINE_FEATURES', 'acpi', 'acpica', '', d)}"
+

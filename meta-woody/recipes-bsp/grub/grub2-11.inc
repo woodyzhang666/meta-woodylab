@@ -13,7 +13,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 
 CVE_PRODUCT = "grub2"
 
-SRC_URI = "file:///home/woody/workspace/loongson/grub-2.11.tar.xz"
+SRC_URI = "file:///home/woody/workspace/loongson/grub-2.11.tar.xz \
+           file://0001-efinet-Add-DHCP-proxy-support.patch \
+          "
 
 SRC_URI[sha256sum] = "14a22dfea500f73f826fb733d561aedeacedd90a41972572200563380166fc64"
 
